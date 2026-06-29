@@ -8,6 +8,9 @@ import { runTests } from 'kixx-test';
 
 
 const DEFAULT_TEST_SERVER_BASE_URL = 'http://localhost:2026';
+const ALPHANUMERIC_COLLATOR = new Intl.Collator('en', {
+    numeric: true,
+});
 
 async function main() {
     const args = util.parseArgs({
@@ -199,7 +202,7 @@ async function dynamicallyImportFile({ filepath }) {
 }
 
 async function readDirectory(dirpath) {
-    const entries = await fsp.readdir(dirpath);
+    const entries = (await fsp.readdir(dirpath)).sort(compareStringsAlphanumeric);
 
     const promises = entries.map((entry) => {
         const filepath = path.join(dirpath, entry);
@@ -223,7 +226,11 @@ function isSkippedPath(filepath, skipPaths) {
 }
 
 function compareFilepaths(a, b) {
-    return a.filepath.localeCompare(b.filepath);
+    return compareStringsAlphanumeric(a.filepath, b.filepath);
+}
+
+function compareStringsAlphanumeric(a, b) {
+    return ALPHANUMERIC_COLLATOR.compare(a, b);
 }
 
 function write(msg, callback) {
