@@ -2,6 +2,7 @@ export default [
     {
         ignores: [
             'node_modules/',
+            'deployments/',
             'tmp/',
         ],
         languageOptions: {
