@@ -1,0 +1,27 @@
+{
+    "name": "kixx-test-harness",
+    "version": "0.1.0",
+    "description": "An end-to-end test harness for the Kixx web framework.",
+    "type": "module",
+    "engines": {
+        "node": ">=24"
+    },
+    "scripts": {
+        "test": "node run-linter",
+        "lint": "node run-linter"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kixx-framework/kixx-test-harness.git"
+    },
+    "author": "Kris Walker (www.kriswalker.me)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/kixx-framework/kixx-test-harness/issues"
+    },
+    "dependencies": {
+        "kixx-assert": "2.1.1",
+        "kixx-linting": "1.1.0",
+        "kixx-test": "3.0.0"
+    }
+}
