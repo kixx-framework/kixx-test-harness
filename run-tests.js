@@ -7,12 +7,15 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { runTests } from 'kixx-test';
 
 
+const DEFAULT_TEST_SERVER_BASE_URL = 'http://localhost:2026';
+
 async function main() {
     const args = util.parseArgs({
         args: process.argv.slice(2),
         strict: false,
         allowPositionals: true,
         options: {
+            'base-url': { type: 'string' },
             skip: { type: 'string', multiple: true },
         },
     });
@@ -23,6 +26,8 @@ async function main() {
     const directory = path.join(rootDirectory, 'tests');
     const pattern = /test.js$/;
     const skipPaths = (args.values.skip || []).map((p) => path.resolve(p));
+
+    process.env.TEST_SERVER_BASE_URL = args.values['base-url'] ?? DEFAULT_TEST_SERVER_BASE_URL;
 
     const startTime = Date.now();
     let testCount = 0;
