@@ -8,6 +8,8 @@ import { runTests } from 'kixx-test';
 
 
 const DEFAULT_TEST_SERVER_BASE_URL = 'http://localhost:2026';
+const DEFAULT_ADMIN_BOOTSTRAP_TOKEN = 'placeholder-bootstrap-token';
+
 const ALPHANUMERIC_COLLATOR = new Intl.Collator('en', {
     numeric: true,
 });
@@ -18,6 +20,7 @@ async function main() {
         strict: false,
         allowPositionals: true,
         options: {
+            'bootstrap-token': { type: 'string' },
             'base-url': { type: 'string' },
             skip: { type: 'string', multiple: true },
         },
@@ -31,6 +34,7 @@ async function main() {
     const skipPaths = (args.values.skip || []).map((p) => path.resolve(p));
 
     const baseURL = args.values['base-url'] ?? DEFAULT_TEST_SERVER_BASE_URL;
+    const bootstrapToken = args.values['bootstrap-token'] ?? DEFAULT_ADMIN_BOOTSTRAP_TOKEN;
 
     try {
         new URL(baseURL);
@@ -39,6 +43,7 @@ async function main() {
     }
 
     process.env.TEST_SERVER_BASE_URL = baseURL;
+    process.env.ADMIN_BOOTSTRAP_TOKEN = bootstrapToken;
 
     const startTime = Date.now();
     let testCount = 0;

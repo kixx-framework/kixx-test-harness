@@ -24,3 +24,9 @@ describe('smoke check the server', ({ before, it }) => {
         assertEqual('NOT_FOUND_ERROR', error.code);
     });
 });
+
+describe('check the bootstrap token', ({ it }) => {
+    it('has set the ADMIN_BOOTSTRAP_TOKEN env var', () => {
+        assertEqual('placeholder-bootstrap-token', process.env.ADMIN_BOOTSTRAP_TOKEN);
+    });
+});
