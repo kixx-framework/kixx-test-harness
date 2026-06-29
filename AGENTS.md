@@ -70,27 +70,9 @@ Exit behavior:
 - Exits 1 when any lint error is present (or when CLI/config loading fails).
 - Exits 0 when results are warnings-only or fully clean.
 
-## Unit Testing
+## Running Tests
 
-Run tests with:
-
-```bash
-# Run all test files (*.test.js) in the ./tests/ directory
-node run-tests.js
-
-# Run all test files (*.test.js) in the files and directories passed into run-tests.js
-node run-tests.js [pathname ...]
-```
-Pathname arguments are optional. If omitted, the CLI uses `./tests/`.
-
-When a target pathname is a directory, the test script walks it recursively and only runs `*.test.js` files. Other file extensions are ignored during directory traversal.
-
-Diagnostic output is written to stderr, grouped by file.
-
-Exit behavior:
-
-- Exits 1 when any test error is present (or when CLI/config loading fails).
-- Exits 0 when results are warnings-only or fully clean.
+Agents should never run tests. This test suite is designed to test remote servers and endpoints end-to-end and running the tests locally can have unexpected side-effects.
 
 ## Planning
 

@@ -27,7 +27,15 @@ async function main() {
     const pattern = /test.js$/;
     const skipPaths = (args.values.skip || []).map((p) => path.resolve(p));
 
-    process.env.TEST_SERVER_BASE_URL = args.values['base-url'] ?? DEFAULT_TEST_SERVER_BASE_URL;
+    const baseURL = args.values['base-url'] ?? DEFAULT_TEST_SERVER_BASE_URL;
+
+    try {
+        new URL(baseURL);
+    } catch (cause) {
+        throw new Error(`Invalid base-url "${ baseURL }"`, { cause });
+    }
+
+    process.env.TEST_SERVER_BASE_URL = baseURL;
 
     const startTime = Date.now();
     let testCount = 0;
