@@ -1,6 +1,6 @@
 import process from 'node:process';
 import { describe } from 'kixx-test';
-import { assert, assertEqual, assertMatches } from 'kixx-assert';
+import { assert, assertEqual, assertArray } from 'kixx-assert';
 
 
 describe('smoke check the server', ({ before, it }) => {
@@ -11,14 +11,16 @@ describe('smoke check the server', ({ before, it }) => {
 
     before(async () => {
         response = await fetch(baseURL);
-        body = await response.text();
+        body = await response.json();
     });
 
-    it('returns an HTML response', () => {
+    it('returns the bare 404', () => {
         assert(response);
-        assertEqual(200, response.status);
-        assertEqual('text/html; charset=utf-8', response.headers.get('content-type'));
-        // Match a sample of the HTML document, just to be sure there is something there.
-        assertMatches('<!doctype html>', body.slice(0, 50));
+        assertEqual(404, response.status);
+        assertEqual('application/json; charset=utf-8', response.headers.get('content-type'));
+        assertArray(body.errors);
+        const error = body.errors[0];
+        assertEqual('404', error.status);
+        assertEqual('NOT_FOUND_ERROR', error.code);
     });
 });
