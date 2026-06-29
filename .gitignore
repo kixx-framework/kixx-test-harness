@@ -33,3 +33,6 @@ package-lock.json
 # Scratch pad
 tmp/
 
+# Kixx deployments - test subjects
+deployments/
+
