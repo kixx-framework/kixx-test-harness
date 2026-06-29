@@ -75,13 +75,13 @@ Exit behavior:
 Run tests with:
 
 ```bash
-# Run all test files (*.test.js) in the ./test/ directory
+# Run all test files (*.test.js) in the ./tests/ directory
 node run-tests.js
 
 # Run all test files (*.test.js) in the files and directories passed into run-tests.js
 node run-tests.js [pathname ...]
 ```
-Pathname arguments are optional. If omitted, the CLI uses `./test/`.
+Pathname arguments are optional. If omitted, the CLI uses `./tests/`.
 
 When a target pathname is a directory, the test script walks it recursively and only runs `*.test.js` files. Other file extensions are ignored during directory traversal.
 
