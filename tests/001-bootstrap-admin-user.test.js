@@ -394,5 +394,7 @@ describe('create token with admin credentials', ({ before, it }) => {
             tokenCreationDate.getTime() + (data.attributes.timeToLiveSeconds * 1000),
             tokenExpirationDate.getTime(),
         );
+
+        process.env.PUBLISHING_API_TOKEN = attributes.token;
     });
 });
