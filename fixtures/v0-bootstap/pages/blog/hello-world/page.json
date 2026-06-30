@@ -1,0 +1,13 @@
+{
+    "pageTemplate": "blog/post.html",
+    "page": {
+        "locale": "en-US",
+        "title": {"template": "My Blog | {{ title }}"},
+        "description": {"template": "{{ title }} | {{ description }}"}
+    },
+    "title": "Hello World!",
+    "description": "This is my first blog post",
+    "includes": {
+        "post_body": { "filename": "post-body.md" }
+    }
+}

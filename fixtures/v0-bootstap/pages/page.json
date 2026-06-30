@@ -1,0 +1,8 @@
+{
+    "baseTemplate": "base.html",
+    "page": {
+        "locale": "en-US",
+        "title": "Blank Website",
+        "description": "Blank website scaffolding"
+    }
+}
