@@ -10,11 +10,7 @@ import {
     assertValidDate,
 } from 'kixx-assert';
 
-
-const ADMIN_USER = {
-    emailAddress: 'Margaret.Hamilton@example.com',
-    password: 'Apollo11-to-the-M00N',
-};
+import { ADMIN_USER } from '../lib/constants.js';
 
 
 describe('smoke check the server', ({ before, it }) => {
@@ -395,6 +391,6 @@ describe('create token with admin credentials', ({ before, it }) => {
             tokenExpirationDate.getTime(),
         );
 
-        process.env.PUBLISHING_API_TOKEN = attributes.token;
+        assertNonEmptyString(attributes.token);
     });
 });

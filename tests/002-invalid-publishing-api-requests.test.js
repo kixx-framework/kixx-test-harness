@@ -4,19 +4,22 @@ import {
     assert,
     assertEqual,
     assertArray,
-    assertNonEmptyString,
 } from 'kixx-assert';
 
+import { mintPublishingApiToken } from '../lib/publishing-api-tokens.js';
 
-const INVALID_PUBLISHING_API_TOKEN = 'kxpat_0000000000000000000000000000000000000000000000000000000000000000';
+
+const INVALID_PUBLISHING_BEARER_TOKEN = 'kxpat_0000000000000000000000000000000000000000000000000000000000000000';
 const STAGED_BUILD_ID = 'invalid-request-test-build';
 
+let publishingApiTokenPromise;
 
 function getPublishingApiToken() {
-    const token = process.env.PUBLISHING_API_TOKEN;
-    assertNonEmptyString(token);
+    if (!publishingApiTokenPromise) {
+        publishingApiTokenPromise = mintPublishingApiToken();
+    }
 
-    return token;
+    return publishingApiTokenPromise;
 }
 
 function createContentLength(payload) {
@@ -41,11 +44,11 @@ async function putPublishingApiResource(args) {
         contentType,
         buildId,
         body,
-        authorization = `Bearer ${ getPublishingApiToken() }`,
+        authorization,
     } = args ?? {};
 
     const headers = {
-        authorization,
+        authorization: authorization ?? `Bearer ${ await getPublishingApiToken() }`,
     };
 
     if (contentType) {
@@ -141,7 +144,7 @@ describe('put template with invalid bearer token', ({ before, it }) => {
         response = await fetch(url, {
             method: 'PUT',
             headers: {
-                authorization: `Bearer ${ INVALID_PUBLISHING_API_TOKEN }`,
+                authorization: `Bearer ${ INVALID_PUBLISHING_BEARER_TOKEN }`,
                 'content-type': 'text/plain; charset=utf-8',
                 'content-length': contentLength,
                 'kixx-build-id': 'invalid-token-test-build',
@@ -182,7 +185,7 @@ describe('put page metadata with invalid bearer token', ({ before, it }) => {
         response = await fetch(url, {
             method: 'PUT',
             headers: {
-                authorization: `Bearer ${ INVALID_PUBLISHING_API_TOKEN }`,
+                authorization: `Bearer ${ INVALID_PUBLISHING_BEARER_TOKEN }`,
                 'content-type': 'application/vnd.api+json; charset=utf-8',
                 'content-length': contentLength,
                 'kixx-build-id': 'invalid-token-test-build',
@@ -213,7 +216,7 @@ describe('put include with invalid bearer token', ({ before, it }) => {
         response = await fetch(url, {
             method: 'PUT',
             headers: {
-                authorization: `Bearer ${ INVALID_PUBLISHING_API_TOKEN }`,
+                authorization: `Bearer ${ INVALID_PUBLISHING_BEARER_TOKEN }`,
                 'content-type': 'text/markdown; charset=utf-8',
                 'content-length': contentLength,
                 'kixx-build-id': 'invalid-token-test-build',
@@ -244,7 +247,7 @@ describe('put static asset with invalid bearer token', ({ before, it }) => {
         response = await fetch(url, {
             method: 'PUT',
             headers: {
-                authorization: `Bearer ${ INVALID_PUBLISHING_API_TOKEN }`,
+                authorization: `Bearer ${ INVALID_PUBLISHING_BEARER_TOKEN }`,
                 'content-type': 'text/css; charset=utf-8',
                 'content-length': contentLength,
                 'kixx-build-id': 'invalid-token-test-build',
