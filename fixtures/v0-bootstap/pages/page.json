@@ -1,4 +1,5 @@
 {
+    "version": "v0-bootstrap",
     "baseTemplate": "base.html",
     "page": {
         "locale": "en-US",

@@ -6,7 +6,7 @@ import {
     assertArray,
 } from 'kixx-assert';
 
-import { mintPublishingApiToken } from '../lib/publishing-api-tokens.js';
+import { mintPublishingApiToken } from '../../lib/publishing-api-tokens.js';
 
 
 const INVALID_PUBLISHING_BEARER_TOKEN = 'kxpat_0000000000000000000000000000000000000000000000000000000000000000';

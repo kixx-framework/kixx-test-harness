@@ -10,7 +10,7 @@ import {
     assertValidDate,
 } from 'kixx-assert';
 
-import { ADMIN_USER } from '../lib/constants.js';
+import { ADMIN_USER } from '../../lib/constants.js';
 
 
 describe('smoke check the server', ({ before, it }) => {
