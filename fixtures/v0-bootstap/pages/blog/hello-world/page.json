@@ -3,11 +3,16 @@
     "pageTemplate": "blog/post.html",
     "page": {
         "locale": "en-US",
-        "title": {"template": "My Blog | {{ title }}"},
-        "description": {"template": "{{ title }} | {{ description }}"}
+        "title": {"template": "My Blog | {{ post.title }}"},
+        "description": {"template": "{{ post.title }} | {{ post.description }}"},
+        "open_graph": {
+            "type": "article"
+        }
     },
-    "title": "Hello World!",
-    "description": "This is my first blog post",
+    "post": {
+        "title": "Hello World!",
+        "description": "This is my first blog post"
+    },
     "includes": {
         "post_body": { "filename": "post-body.md" }
     }

@@ -1,7 +1,6 @@
 import process from 'node:process';
 import { describe } from 'kixx-test';
 import {
-    assert,
     assertEqual,
     assertArray,
     assertMatches,
