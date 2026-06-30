@@ -3,7 +3,7 @@ import util from 'node:util';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { EOL } from 'node:os';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { runTests } from 'kixx-test';
 
 
@@ -27,9 +27,10 @@ async function main() {
     });
 
     const testPaths = args.positionals.map((p) => path.resolve(p));
+    if (testPaths.length === 0) {
+        throw new Error('Missing required test path argument');
+    }
 
-    const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
-    const directory = path.join(rootDirectory, 'tests');
     const pattern = /test.js$/;
     const skipPaths = (args.values.skip || []).map((p) => path.resolve(p));
 
@@ -49,14 +50,7 @@ async function main() {
     let testCount = 0;
     let disabledTestCount = 0;
     let errorCount = 0;
-    let testFiles;
-
-    if (testPaths.length > 0) {
-        testFiles = await readTestFilesFromPaths(testPaths, pattern, skipPaths);
-    } else {
-        // Load all test files from the full, nested test directory.
-        testFiles = await readTestFilesFromDirectory(directory, pattern, skipPaths);
-    }
+    const testFiles = await readTestFilesFromPaths(testPaths, pattern, skipPaths);
 
     testFiles.sort(compareFilepaths);
     for (const file of testFiles) {
